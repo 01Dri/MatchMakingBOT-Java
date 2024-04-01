@@ -18,12 +18,10 @@ public class QueueServiceImpl implements  QueueService{
     }
 
     @Override
-    public Boolean createQueues(Rank rank) {
-        Queue queueRankA = new Queue(UUID.randomUUID(), rank, MAX_PLAYERS);
-        Queue queueRankB = new Queue(UUID.randomUUID(), rank, MAX_PLAYERS);
-        this.queueRepository.saveQueue(queueRankA);
-        this.queueRepository.saveQueue(queueRankB);
-        return true;
+    public Queue createQueues(Rank rank) {
+        Queue queueRank = new Queue(UUID.randomUUID(), rank, MAX_PLAYERS);
+        this.queueRepository.saveQueue(queueRank);
+        return queueRank;
     }
 
     @Override

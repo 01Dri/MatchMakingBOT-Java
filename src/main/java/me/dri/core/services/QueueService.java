@@ -6,7 +6,7 @@ import me.dri.core.enums.Rank;
 
 public interface QueueService {
 
-    Boolean createQueues(Rank rank);
+    Queue createQueues(Rank rank);
     Boolean saveQueue(Queue queue);
 
     Queue addPlayerOnQueue(Player player);
