@@ -7,8 +7,8 @@ public interface Button {
     void setIdButton(String idButton);
 
     String getIdButton();
-    Optional<String> getCustomId();
-    Optional<String> getLabel();
+    String getCustomId();
+    String getLabel();
 
     void handle();
 }

@@ -8,6 +8,8 @@ public interface QueueService {
 
     Queue createQueues(Rank rank);
     Boolean saveQueue(Queue queue);
-
     Queue addPlayerOnQueue(Player player);
+    Queue findCurrentQueue(String playerName);
+
+    void removePlayerOnQueue(Player player);
 }

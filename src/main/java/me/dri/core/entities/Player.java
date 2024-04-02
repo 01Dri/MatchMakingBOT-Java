@@ -1,21 +1,41 @@
 package me.dri.core.entities;
 
+import jakarta.persistence.*;
 import me.dri.core.enums.QueueStatus;
 import me.dri.core.enums.Rank;
 
-public class Player {
+import java.io.Serializable;
+import java.util.Objects;
 
+@Entity
+@Table(name = "players")
+public class Player implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "discord_id")
     private String discordId;
+    @Column(name = "discord_name")
     private String discordName;
 
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "rank")
     private Rank rank;
 
+    @Column(name = "points")
     private Integer points;
+
+    @Column(name = "wins")
+
     private Integer wins;
+    @Column(name = "losses")
 
     private Integer losses;
 
+    @Column(name = "queue_status")
+    @Enumerated(EnumType.ORDINAL)
     private QueueStatus queueStatus;
 
     public Player() {
@@ -95,5 +115,32 @@ public class Player {
 
     public void setQueueStatus(QueueStatus queueStatus) {
         this.queueStatus = queueStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "id=" + id +
+                ", discordId='" + discordId + '\'' +
+                ", discordName='" + discordName + '\'' +
+                ", rank=" + rank +
+                ", points=" + points +
+                ", wins=" + wins +
+                ", losses=" + losses +
+                ", queueStatus=" + queueStatus +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Player player = (Player) object;
+        return Objects.equals(id, player.id) && Objects.equals(discordId, player.discordId) && Objects.equals(discordName, player.discordName) && rank == player.rank && Objects.equals(points, player.points) && Objects.equals(wins, player.wins) && Objects.equals(losses, player.losses) && queueStatus == player.queueStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, discordId, discordName, rank, points, wins, losses, queueStatus);
     }
 }

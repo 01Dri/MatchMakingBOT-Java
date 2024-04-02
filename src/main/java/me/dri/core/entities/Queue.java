@@ -60,4 +60,8 @@ public class Queue {
     public List<Player> getPlayers() {
         return this.players;
     }
+
+    public boolean removePlayer(Player player) {
+        return this.players.remove(player);
+    }
 }

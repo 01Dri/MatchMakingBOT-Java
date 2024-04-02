@@ -6,8 +6,6 @@ public class DiscordBotConfig {
     private String token;
     private String prefix;
 
-
-
     public DiscordBotConfig(String token, String prefix) {
         this.token = token;
         this.prefix = prefix;

@@ -50,6 +50,10 @@ public class QueueRepositoryImpl  implements  QueueRepository{
 
     @Override
     public List<Queue> findAllQueues() {
-        return new ArrayList<Queue>(this.queues.values());
+        List<Queue> queuesResult = new ArrayList<>();
+        for (Queue q : this.queues.values()) {
+            queuesResult.add(q);
+        }
+        return queuesResult;
     }
 }

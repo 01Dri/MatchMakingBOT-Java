@@ -33,12 +33,27 @@ public class QueueServiceImpl implements  QueueService{
     @Override
     public Queue addPlayerOnQueue(Player player) {
         Queue queue = this.queueRepository.findQueueNotFull().get();
-        if (player.getRank() == Rank.RANK_A) {
-            if (queue != null) {
-                queue.addPlayer(player);
-                this.queueRepository.saveQueue(queue);
+        queue.addPlayer(player);
+        this.queueRepository.saveQueue(queue);
+
+        return queue;
+    }
+
+    @Override
+    public Queue findCurrentQueue(String playerName) {
+        for (Queue queue : queueRepository.findAllQueues()) {
+            for (Player player : queue.getPlayers()) {
+                if (player.getDiscordName().equals(playerName)) {
+                    return queue;
+                }
             }
         }
-        return queue;
+        return null;
+    }
+
+    @Override
+    public void removePlayerOnQueue(Player player) {
+        Queue queue = this.findCurrentQueue(player.getDiscordName());
+        queue.removePlayer(player);
     }
 }

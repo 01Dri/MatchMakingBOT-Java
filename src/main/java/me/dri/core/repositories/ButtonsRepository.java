@@ -13,4 +13,20 @@ public class ButtonsRepository implements  IButtonRepository {
     public void saveButton(Button button) {
         this.buttons.put(button.getIdButton(), button);
     }
+
+    @Override
+    public Button findButton(String customId) {
+        for (Button button : buttons.values()) {
+            System.out.println(button.getCustomId());
+            if (button.getIdButton().equals(customId)) {
+                return button;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void findAllButton() {
+        this.buttons.values().forEach(b -> System.out.println(b.getCustomId()));
+    }
 }

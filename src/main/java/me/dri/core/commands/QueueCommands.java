@@ -6,19 +6,31 @@ import discord4j.core.object.component.Button;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.channel.MessageChannel;
 import discord4j.core.spec.MessageCreateSpec;
+import discord4j.core.spec.MessageEditSpec;
 import me.dri.core.embeds.EmbedsMessages;
+import me.dri.core.entities.ButtonQueues;
+import me.dri.core.entities.Player;
 import me.dri.core.entities.Queue;
 import me.dri.core.enums.Rank;
+import me.dri.core.repositories.IButtonRepository;
+import me.dri.core.repositories.QueueRepository;
+import me.dri.core.services.ButtonService;
 import me.dri.core.services.QueueService;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class QueueCommands implements Commands {
-
-    private Message messageButtonCreated;
     private final QueueService queueService;
+    private final ButtonService buttonService;
+    private Message messageButtonCreated;
 
-    public QueueCommands(QueueService queueService) {
+    private  Button buttonCreated;
+
+    public QueueCommands(QueueService queueService, ButtonService buttonService) {
         this.queueService = queueService;
+        this.buttonService = buttonService;
     }
 
     @Override
@@ -42,15 +54,27 @@ public class QueueCommands implements Commands {
         }
         return Mono.empty();
     }
+
+    @Override
+    public Mono<Void> updateButtonQueues(List<Player> players) {
+        return this.messageButtonCreated.edit(MessageEditSpec.builder()
+                        .addEmbed(EmbedsMessages.embedCreateQueues(players))
+                .addComponent(ActionRow.of(this.buttonCreated))
+                .build()).then();
+    }
+
     protected MessageCreateSpec start() {
         Queue queue = this.queueService.createQueues(Rank.RANK_A);
         Queue queue2 = this.queueService.createQueues(Rank.RANK_B);
+        this.queueService.saveQueue(queue);
+        this.queueService.saveQueue(queue2);
         String queuesId = queue.getId().toString() + " - " + queue2.getId().toString();
-        Button button = Button.primary(queuesId, "Entrar/Sair");
-//        this.buttonService.saveButton(new ButtonQueues("button_queue", button.getCustomId(), button.getLabel()));
+        Button button = Button.primary("buttonQueue", "Entrar/Sair");
+        this.buttonCreated = button;
+        this.buttonService.saveButton(new ButtonQueues(button.getCustomId().get(), queuesId, button.getLabel().get()));
         return MessageCreateSpec.builder()
                 .content("Filas iniciadas!!!")
-                .embeds(EmbedsMessages.embedCreateQueues())
+                .embeds(EmbedsMessages.embedCreateQueues(new ArrayList<>()))
                 .addComponent(ActionRow.of(button))
                 .build();
 
