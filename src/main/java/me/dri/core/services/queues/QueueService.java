@@ -1,4 +1,4 @@
-package me.dri.core.services;
+package me.dri.core.services.queues;
 
 import me.dri.core.entities.Player;
 import me.dri.core.entities.Queue;

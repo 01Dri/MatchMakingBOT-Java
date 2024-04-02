@@ -12,10 +12,8 @@ import me.dri.core.entities.ButtonQueues;
 import me.dri.core.entities.Player;
 import me.dri.core.entities.Queue;
 import me.dri.core.enums.Rank;
-import me.dri.core.repositories.IButtonRepository;
-import me.dri.core.repositories.QueueRepository;
-import me.dri.core.services.ButtonService;
-import me.dri.core.services.QueueService;
+import me.dri.core.services.button.ButtonService;
+import me.dri.core.services.queues.QueueService;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;

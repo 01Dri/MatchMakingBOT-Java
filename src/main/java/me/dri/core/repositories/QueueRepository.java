@@ -11,7 +11,7 @@ public interface QueueRepository {
     boolean saveQueue(Queue queue);
     boolean deleteQueue(Queue queue);
     Optional<Queue> findQueueById(UUID queueId);
-    Optional<Queue> findQueueNotFull();
+    List<Queue> findQueueNotFull();
     List<Queue> findAllQueues();
 
 }

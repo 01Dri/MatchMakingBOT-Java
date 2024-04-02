@@ -1,4 +1,4 @@
-package me.dri.core.services;
+package me.dri.core.services.button;
 
 import me.dri.core.entities.Button;
 import me.dri.core.entities.ButtonQueues;

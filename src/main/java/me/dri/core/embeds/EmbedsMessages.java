@@ -1,5 +1,7 @@
 package me.dri.core.embeds;
 
+import discord4j.core.object.entity.channel.Channel;
+import discord4j.core.object.entity.channel.VoiceChannel;
 import discord4j.core.spec.EmbedCreateSpec;
 import discord4j.rest.util.Color;
 import me.dri.core.entities.Player;
@@ -32,5 +34,17 @@ public class EmbedsMessages {
                     .addField("PARTIDAS EM ANDAMENTO:", "0", false)
                     .build();
         }
+    }
+
+    public static EmbedCreateSpec embedJoinedQueue(Queue queue, VoiceChannel channel) {
+        return EmbedCreateSpec.builder()
+                .color(Color.RED)
+                .title("MATCHMAKING FILA")
+                .description("Você entrou em uma fila")
+                .addField("ID FILA:", queue.getId().toString(), false)
+                .addField("CANAL DE ESPERA:", channel.getMention(), false)
+                .addField("RANK DA FILA:", queue.getRank().name(), false)
+                .build();
+
     }
 }

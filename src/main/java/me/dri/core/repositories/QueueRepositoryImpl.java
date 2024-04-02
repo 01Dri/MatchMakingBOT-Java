@@ -6,7 +6,7 @@ import me.dri.core.exceptions.NotFoundQueueException;
 
 import java.util.*;
 
-public class QueueRepositoryImpl  implements  QueueRepository{
+public class QueueRepositoryImpl  implements  QueueRepository {
 
     private HashMap<UUID, Queue> queues = new HashMap<>();
 
@@ -39,14 +39,17 @@ public class QueueRepositoryImpl  implements  QueueRepository{
     }
 
     @Override
-    public Optional<Queue> findQueueNotFull() {
+    public List<Queue> findQueueNotFull() {
+        List<Queue> queuesNotFull = new ArrayList<>();
         for (Queue queue : this.queues.values()) {
             if (queue.getPlayers().size() < queue.getMaxPlayers()) {
-                return Optional.of(queue);
+                queuesNotFull.add(queue);
             }
         }
-        return Optional.empty();
+        return queuesNotFull;
     }
+
+
 
     @Override
     public List<Queue> findAllQueues() {
